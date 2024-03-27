@@ -22,8 +22,9 @@ keymap.set('n', 's', '<Cmd>w<CR>', {noremap=true}) -- Save
 
 keymap.set('v', '<BS>', '"_d', { noremap = true }) -- Backspace removes selection
 
-keymap.set('v', '<Left>', 'ge', { noremap = true })
-keymap.set('v', '<Right>', '<C-S-Right>', { noremap = true })
+keymap.set('v','<Up>', 'k', {noremap=true})
+keymap.set('v', 'k', 'ge', { noremap = true })
+keymap.set('v', 'l', '<C-S-Right>', { noremap = true })
 
 keymap.set("v", "x", '"+y<C-o>vgvxi', { noremap = true }) -- Cut selection
 
@@ -34,3 +35,5 @@ keymap.set({'n','v'}, 'e', '$', {noremap=true}) -- Go to end of line
 keymap.set({'n','v'}, 'b', '0', {noremap=true}) -- Go to beginning of line
 
 keymap.set("i", "<Esc>", "<Esc>l", {noremap=true})
+
+keymap.set("n", "o", "<Cmd>Telescope buffers<CR>", {noremap=true})

@@ -34,12 +34,12 @@ function autosaveSession()
 end
 
 vim.cmd([[autocmd VimEnter * nested lua autosaveSession() ]]) -- Reload session when starting with no arguments
-vim.cmd([[autocmd VimEnter * startinsert!]])
+--vim.cmd([[autocmd VimEnter * startinsert!]])
 vim.cmd([[autocmd CursorHoldI * doautocmd CursorHold]]) -- Since I rarely leave Insert, manually fire the CursorHold event every once in a while
 
 vim.cmd([[set updatetime=400]])
-vim.cmd("set statusline+=%F") -- Show full path instead of 
+
 --vim.cmd("set sessionoptions=blank,curdir,sesdir,folds,help,tabpages,winsize")
 --vim.cmd("autocmd BufDelete * if len(filter(range(1, bufnr('$')), '! empty(bufname(v:val)) && buflisted(v:val)')) == 1 | quit | endif") -- Quit if there's no more buffers left
-
+vim.cmd("set nohidden") --required to prevent the creation of "No Name" buffers 
 
