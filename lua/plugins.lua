@@ -17,6 +17,3 @@ vim.cmd([[let g:spelunker_highlight_type = 2]])
 require("auto-save").setup{
 	trigger_events={"TextChangedI","TextChanged"}
 }
-
-
-
