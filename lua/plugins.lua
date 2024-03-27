@@ -6,11 +6,8 @@ Plug("kamykn/spelunker.vim")
 	
 Plug('pocco81/auto-save.nvim')
 
-Plug('zefei/vim-wintabs')
-Plug('zefei/vim-wintabs-powerline')
-
-Plug('xolox/vim-session')
-Plug('xolox/vim-misc')
+Plug('nvim-lua/plenary.nvim')
+Plug('nvim-telescope/telescope.nvim', {['tag']= '0.1.6'})
 
 vim.call('plug#end')
 
@@ -21,4 +18,5 @@ require("auto-save").setup{
 	trigger_events={"TextChangedI","TextChanged"}
 }
 
-vim.cmd([[let g:session_directory="]]..vim.fn.stdpath("data")..[[/sessions/"]])
+
+

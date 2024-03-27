@@ -13,12 +13,22 @@ function autosaveSession()
 
   if (true) then
     if file_exists(session_file) then
-    vim.cmd("source " .. session_file)
+    local cmd_string=""
+    cmd_string=cmd_string.."source " .. session_file
+    
+    for i, File in ipairs(vim.fn.argv()) do
+    if i>0 then
+      cmd_string=cmd_string.." | "..[[edit ]]..File..[[]] -- This makes sure that the files opened are the last ones displayed
+    end
+    vim.cmd(cmd_string)
+  end
     end
   end
   
+  
   vim.loop.new_timer():start(0,500,vim.schedule_wrap(function()
-    vim.cmd("mksession! "..session_file)
+    os.remove(session_file)
+    vim.cmd("silent! argd* | " .. "mksession! "..session_file) -- The argd is needed, else even if you delete a buffer, if you passed it in as an argument, it will be restored anyway
   end))
   
 end
@@ -28,9 +38,8 @@ vim.cmd([[autocmd VimEnter * startinsert!]])
 vim.cmd([[autocmd CursorHoldI * doautocmd CursorHold]]) -- Since I rarely leave Insert, manually fire the CursorHold event every once in a while
 
 vim.cmd([[set updatetime=400]])
-vim.cmd("set sessionoptions-=options")
-vim.cmd("set sessionoptions-=localoptions")
-vim.cmd("set sessionoptions+=globals")
+vim.cmd("set statusline+=%F") -- Show full path instead of 
+--vim.cmd("set sessionoptions=blank,curdir,sesdir,folds,help,tabpages,winsize")
 --vim.cmd("autocmd BufDelete * if len(filter(range(1, bufnr('$')), '! empty(bufname(v:val)) && buflisted(v:val)')) == 1 | quit | endif") -- Quit if there's no more buffers left
 
 
