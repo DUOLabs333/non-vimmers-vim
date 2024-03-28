@@ -3,7 +3,7 @@ local api = vim.api
 local uv = vim.loop
 
 keymap.set("v", "c", '"+y', { noremap = true }) -- Copy to clipboard
-keymap.set("v", "v", 'P', { noremap = true }) -- Paste from clipboard
+keymap.set("v", "v", '"+p', { noremap = true }) -- Paste from clipboard
 
 
 keymap.set('n', 'z', '<C-g>u<Cmd>u<CR>', { noremap = true }) --Undo
@@ -28,7 +28,7 @@ keymap.set('v','<Up>', 'k', {noremap=true})
 keymap.set('v', 'k', 'ge', { noremap = true })
 keymap.set('v', 'l', '<C-S-Right>', { noremap = true })
 
-keymap.set("v", "x", '"+ygxi', { noremap = true }) -- Cut selection
+keymap.set("v", "x", '"+d', { noremap = true }) -- Cut selection
 
 keymap.set('i', '<C-e>', '<C-o>:', {noremap=true}) -- Makes it easier to get to commands
 
