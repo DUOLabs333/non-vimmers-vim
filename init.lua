@@ -11,7 +11,6 @@ end
 function autosaveSession()
   --if (vim.fn.argc()==0) then
 
-  if (true) then
     if file_exists(session_file) then
     local cmd_string=""
     cmd_string=cmd_string.."source " .. session_file
@@ -20,10 +19,9 @@ function autosaveSession()
     if i>0 then
       cmd_string=cmd_string.." | "..[[edit ]]..File..[[]] -- This makes sure that the files opened are the last ones displayed
     end
-    vim.cmd(cmd_string)
-  end
+      end
+   vim.cmd(cmd_string)
     end
-  end
   
   
   vim.loop.new_timer():start(0,500,vim.schedule_wrap(function()
@@ -39,7 +37,7 @@ vim.cmd([[autocmd CursorHoldI * doautocmd CursorHold]]) -- Since I rarely leave 
 
 vim.cmd([[set updatetime=400]])
 
---vim.cmd("set sessionoptions=blank,curdir,sesdir,folds,help,tabpages,winsize")
+vim.cmd("set sessionoptions=blank,folds,help,tabpages,winsize")
 --vim.cmd("autocmd BufDelete * if len(filter(range(1, bufnr('$')), '! empty(bufname(v:val)) && buflisted(v:val)')) == 1 | quit | endif") -- Quit if there's no more buffers left
-vim.cmd("set nohidden") --required to prevent the creation of "No Name" buffers 
+vim.cmd("set nohidden") --required to prevent the creation of "No  
 
