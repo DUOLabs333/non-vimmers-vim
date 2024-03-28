@@ -32,3 +32,5 @@ require("telescope").setup{
   path_display={absolute}
 }
 }
+
+vim.cmd([[let g:vimtex_compiler_enabled=0]])

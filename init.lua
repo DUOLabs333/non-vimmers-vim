@@ -39,5 +39,5 @@ vim.cmd([[set updatetime=400]])
 
 vim.cmd("set sessionoptions=blank,folds,help,tabpages,winsize")
 --vim.cmd("autocmd BufDelete * if len(filter(range(1, bufnr('$')), '! empty(bufname(v:val)) && buflisted(v:val)')) == 1 | quit | endif") -- Quit if there's no more buffers left
-vim.cmd("set nohidden") --required to prevent the creation of "No  
+vim.cmd("set nohidden") --required to prevent the creation of "[No Name]" buffers
 
