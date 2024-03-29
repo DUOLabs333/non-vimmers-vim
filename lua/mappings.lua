@@ -12,6 +12,7 @@ keymap.set('n', 'y', '<Esc><C-r>', { noremap = true }) -- Redo (Could replace wi
 keymap.set('n', 'c', 'Zl',{remap=true}) -- Activate spellcheck corrections
 
 api.nvim_create_user_command("Spell", "call spelunker#correct_from_list()",{})
+api.nvim_create_user_command("Errors", "Trouble",{})
 
 keymap.set('n', 'k', 'ge', { noremap = true }) -- Goes to end of previous word
 keymap.set('n', 'l', 'a<C-Right><Esc>', {noremap=true}) -- Goes to beginning of next word
@@ -48,6 +49,7 @@ keymap.set("i", "<Esc>", "<Esc>l", {noremap=true})
 keymap.set("n", "o", "<Cmd>Telescope buffers<CR>", {remap=true})
 
 keymap.set("n","<Esc>", function()
+	vim.cmd("TroubleClose")
 if vim.fn.getreg("/") ~= "" then
   vim.cmd([[let @/ = ""]])
   return ""
@@ -58,8 +60,13 @@ end, {expr=true, noremap=true}) -- Clear search pattern if there is any
 
 keymap.set("n", "b", "N", {noremap=true}) -- Going backwards in a search
 
-keymap.set("v","]", ">gv", {noremap=true})
-keymap.set("v","}", "<gv", {noremap=true})
+keymap.set("v","]]", ">gv", {noremap=true}) -- Indent
+keymap.set("v","[[", "<gv", {noremap=true}) -- Deindent
+
+keymap.set("n", ";", ":", {noremap=true})
+
+
+
 -- LaTex related commands
 -----------------------------------
 keymap.set("i", "<Tab>", function()

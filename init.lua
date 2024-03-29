@@ -1,4 +1,3 @@
-require("lsp")
 require("plugins")
 require("mappings")
 
@@ -41,3 +40,8 @@ vim.cmd("set sessionoptions=blank,folds,help,tabpages,winsize")
 --vim.cmd("autocmd BufDelete * if len(filter(range(1, bufnr('$')), '! empty(bufname(v:val)) && buflisted(v:val)')) == 1 | quit | endif") -- Quit if there's no more buffers left
 vim.cmd("set nohidden") --required to prevent the creation of "[No Name]" buffers
 
+
+vim.api.nvim_create_autocmd("InsertEnter", { pattern = "*", callback = function() vim.diagnostic.config({ signs = false, }) end }) 
+vim.api.nvim_create_autocmd("InsertLeave", { pattern = "*", callback = function() vim.diagnostic.config({ signs = true, }) vim.cmd("TroubleClose") end })
+
+vim.diagnostic.config({virtual_text = false})
