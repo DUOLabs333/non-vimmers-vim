@@ -2,12 +2,12 @@ local keymap = vim.keymap
 local api = vim.api
 local uv = vim.loop
 
-keymap.set("v", "c", '"+y', { noremap = true }) -- Copy to clipboard
-keymap.set("v", "v", '"+p', { noremap = true }) -- Paste from clipboard
+keymap.set("v", "c", '"+yi', { noremap = true }) -- Copy to clipboard
+keymap.set("v", "v", '"+pi', { noremap = true }) -- Paste from clipboard
 
 
-keymap.set('n', 'z', 'u', { noremap = true }) --Undo
-keymap.set('n', 'y', '<Esc><C-r>', { noremap = true }) -- Redo (Could replace with <C-o><C-r>)
+keymap.set('n', 'z', 'ua', { noremap = true }) --Undo
+keymap.set('n', 'y', '<Esc><C-r>a', { noremap = true }) -- Redo (Could replace with <C-o><C-r>)
 
 keymap.set('n', 'c', 'Zl',{remap=true}) -- Activate spellcheck corrections
 
@@ -20,6 +20,8 @@ keymap.set('n', 'l', 'a<C-Right><Esc>', {noremap=true}) -- Goes to beginning of 
 keymap.set('v', 'k', 'ge', { noremap = true })
 keymap.set('v', 'l', '<C-S-Right>', { noremap = true })
 
+keymap.set('n', 'i', 'a', {noremap=true})
+
 keymap.set('n', 'd', '<Cmd>t.<CR>k', {noremap=true}) -- Duplicate line without moving cursor
 
 keymap.set('n', 'q', '<Cmd>qa<CR>', {noremap=true}) -- Quit without saving
@@ -28,7 +30,7 @@ keymap.set('n', 'w', '<Cmd>:bd<CR>', {noremap=true}) -- Quit without saving
 
 keymap.set('n', 's', '<Cmd>w<CR>', {noremap=true}) -- Save
 
-keymap.set('v', '<BS>', '"_d', { noremap = true }) -- Backspace removes selection
+keymap.set('v', '<BS>', '"_di', { noremap = true }) -- Backspace removes selection
 
 keymap.set({'n','v'},'<Up>', 'gk', {noremap=true}) -- Respect wrapped lines
 keymap.set({'n','v'},'<Down>', 'gj', {noremap=true})
@@ -47,6 +49,8 @@ keymap.set({'n','v'}, 'b', 'g0', {noremap=true}) -- Go to beginning of line
 keymap.set("i", "<Esc>", "<Esc>l", {noremap=true})
 
 keymap.set("n", "o", "<Cmd>Telescope buffers<CR>", {remap=true})
+
+keymap.set("v", "i", "a", {remap=true})
 
 keymap.set("n","<Esc>", function()
 	vim.cmd("TroubleClose")

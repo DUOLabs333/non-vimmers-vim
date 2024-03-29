@@ -42,7 +42,7 @@ vim.cmd("set sessionoptions=blank,folds,help,tabpages,winsize")
 vim.cmd("set nohidden") --required to prevent the creation of "[No Name]" buffers
 
 
-vim.api.nvim_create_autocmd("InsertEnter", { pattern = "*", callback = function() vim.diagnostic.config({ signs = true, }) end }) 
-vim.api.nvim_create_autocmd("InsertLeave", { pattern = "*", callback = function() vim.diagnostic.config({ signs = true, }) vim.cmd("TroubleClose") end })
+vim.api.nvim_create_autocmd("InsertEnter", { pattern = "*", callback = function() vim.diagnostic.config({ signs = true, update_in_insert=true}) end }) 
+vim.api.nvim_create_autocmd("InsertLeave", { pattern = "*", callback = function() vim.diagnostic.config({ signs = true, update_in_insert=true}) vim.cmd("TroubleClose") end })
 
 vim.diagnostic.config({virtual_text = false})
