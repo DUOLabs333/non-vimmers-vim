@@ -32,7 +32,7 @@ function autosaveSession()
 end
 
 vim.cmd([[autocmd VimEnter * nested lua autosaveSession() ]]) -- Reload session when starting with no arguments
---vim.cmd([[autocmd VimEnter * startinsert!]])
+vim.cmd([[autocmd VimEnter * startinsert!]])
 vim.cmd([[autocmd CursorHoldI * doautocmd CursorHold]]) -- Since I rarely leave Insert, manually fire the CursorHold event every once in a while
 
 vim.cmd([[set updatetime=400]])
