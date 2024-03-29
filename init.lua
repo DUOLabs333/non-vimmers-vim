@@ -8,8 +8,9 @@ function file_exists(name)
    if f~=nil then io.close(f) return true else return false end
 end
 function autosaveSession()
-  --if (vim.fn.argc()==0) then
-
+    if true then 
+	return -- Disable for now (does more harm than good)
+    end
     if file_exists(session_file) then
     local cmd_string=""
     cmd_string=cmd_string.."source " .. session_file
@@ -41,7 +42,7 @@ vim.cmd("set sessionoptions=blank,folds,help,tabpages,winsize")
 vim.cmd("set nohidden") --required to prevent the creation of "[No Name]" buffers
 
 
-vim.api.nvim_create_autocmd("InsertEnter", { pattern = "*", callback = function() vim.diagnostic.config({ signs = false, }) end }) 
+vim.api.nvim_create_autocmd("InsertEnter", { pattern = "*", callback = function() vim.diagnostic.config({ signs = true, }) end }) 
 vim.api.nvim_create_autocmd("InsertLeave", { pattern = "*", callback = function() vim.diagnostic.config({ signs = true, }) vim.cmd("TroubleClose") end })
 
 vim.diagnostic.config({virtual_text = false})

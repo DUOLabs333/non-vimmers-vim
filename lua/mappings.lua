@@ -40,9 +40,9 @@ keymap.set("v", "x", '"+d', { noremap = true }) -- Cut selection
 
 keymap.set('i', '<C-e>', '<C-o>:', {noremap=true}) -- Makes it easier to get to commands
 
-keymap.set({'n','v'}, 'e', '$', {noremap=true}) -- Go to end of line
+keymap.set({'n','v'}, 'e', 'g$', {noremap=true}) -- Go to end of line
 
-keymap.set({'n','v'}, 'b', '0', {noremap=true}) -- Go to beginning of line
+keymap.set({'n','v'}, 'b', 'g0', {noremap=true}) -- Go to beginning of line
 
 keymap.set("i", "<Esc>", "<Esc>l", {noremap=true})
 
