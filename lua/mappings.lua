@@ -2,57 +2,62 @@ local keymap = vim.keymap
 local api = vim.api
 local uv = vim.loop
 
-keymap.set("v", "c", '"+yi', { noremap = true }) -- Copy to clipboard
-keymap.set("v", "v", '"+pi', { noremap = true }) -- Paste from clipboard
+keymap.set("v", "<C-c>", '"+y', { noremap = true }) -- Copy to clipboard
+-- keymap.set("v", "v", '"+p', { noremap = true }) -- Paste from clipboard
 
 
-keymap.set('n', 'z', 'ua', { noremap = true }) --Undo
-keymap.set('n', 'y', '<Esc><C-r>a', { noremap = true }) -- Redo (Could replace with <C-o><C-r>)
+keymap.set('i', '<C-z>', '<Cmd>u<CR>', { noremap = true }) --Undo
+keymap.set('i', '<C-y>', '<C-o><C-r>', { noremap = true }) -- Redo (Could replace with <C-o><C-r>)
 
-keymap.set('n', 'c', 'Zl',{remap=true}) -- Activate spellcheck corrections
+--keymap.set('n', 'c', 'Zl',{remap=true}) -- Activate spellcheck corrections
 
 api.nvim_create_user_command("Spell", "call spelunker#correct_from_list()",{})
 api.nvim_create_user_command("Errors", "Trouble",{})
 
-keymap.set('n', 'k', 'ge', { noremap = true }) -- Goes to end of previous word
-keymap.set('n', 'l', 'a<C-Right><Esc>', {noremap=true}) -- Goes to beginning of next word
+keymap.set('i', '<C-Left>', '<Esc>gea', { noremap = true }) -- Goes to end of previous word
+--keymap.set('n', 'l', 'a<C-Right><Esc>', {noremap=true}) -- Goes to beginning of next word
 
-keymap.set('v', 'k', 'ge', { noremap = true })
-keymap.set('v', 'l', '<C-S-Right>', { noremap = true })
+keymap.set('i', '<C-S-Right>', '<C-o>v<C-Right>', {noremap=true})
+keymap.set('i', '<C-S-Left>', '<C-o>v<C-Left>', {noremap=true})
+keymap.set('v', '<C-S-Left>', 'ge', { noremap = true })
 
-keymap.set('n', 'i', 'a', {noremap=true})
+--keymap.set('n', 'i', 'a', {noremap=true})
 
-keymap.set('n', 'd', '<Cmd>t.<CR>k', {noremap=true}) -- Duplicate line without moving cursor
 
-keymap.set('n', 'q', '<Cmd>qa<CR>', {noremap=true}) -- Quit without saving
+keymap.set('i', '<C-d>', '<Esc><Cmd>t.<CR>ka', {noremap=true}) -- Duplicate line without moving cursor
 
-keymap.set('n', 'w', '<Cmd>:bd<CR>', {noremap=true}) -- Quit without saving
+keymap.set('i', '<C-q>', '<Cmd>qa<CR>', {noremap=true}) -- Quit without saving
 
-keymap.set('n', 's', '<Cmd>w<CR>', {noremap=true}) -- Save
+keymap.set('i', '<C-w>', '<Cmd>:bd<CR>', {noremap=true}) -- Close window
+
+keymap.set('i', '<C-s>', '<Cmd>w<CR>', {noremap=true}) -- Save
 
 keymap.set('v', '<BS>', '"_di', { noremap = true }) -- Backspace removes selection
 
-keymap.set({'n','v'},'<Up>', 'gk', {noremap=true}) -- Respect wrapped lines
-keymap.set({'n','v'},'<Down>', 'gj', {noremap=true})
+keymap.set('v','<Up>', 'gk', {noremap=true}) -- Respect wrapped lines
+keymap.set('v','<Down>', 'gj', {noremap=true})
+
+keymap.set('v','<C-S-Up>', '<Up>', {remap=true}) -- Respect wrapped lines
+keymap.set('v','<C-S-Down>', '<Down>', {remap=true})
 
 keymap.set('i','<Up>', '<C-o>gk', {noremap=true})
 keymap.set('i','<Down>', '<C-o>gj', {noremap=true})
 
-keymap.set("v", "x", '"+d', { noremap = true }) -- Cut selection
+keymap.set("v", "<C-x>", '"+d', { noremap = true }) -- Cut selection
 
-keymap.set('i', '<C-e>', '<C-o>:', {noremap=true}) -- Makes it easier to get to commands
+--keymap.set('i', '<C-e>', '<C-o>:', {noremap=true}) -- Makes it easier to get to commands
 
-keymap.set({'n','v'}, 'e', 'g$', {noremap=true}) -- Go to end of line
+keymap.set("i", '<C-l>', '<Esc>g$a', {noremap=true}) -- Go to end of line
 
-keymap.set({'n','v'}, 'b', 'g0', {noremap=true}) -- Go to beginning of line
+keymap.set("i", '<C-k>', '<Esc>g0i', {noremap=true}) -- Go to beginning of line
 
-keymap.set("i", "<Esc>", "<Esc>l", {noremap=true})
+--keymap.set("i", "<Esc>", "<Esc>`^", {noremap=true})
 
-keymap.set("n", "o", "<Cmd>Telescope buffers<CR>", {remap=true})
+keymap.set("i", "<C-o>", "<Cmd>Telescope buffers<CR>", {remap=true})
 
-keymap.set("v", "i", "a", {remap=true})
+-- keymap.set("v", "i", "a", {remap=true})
 
-keymap.set("n","<Esc>", function()
+keymap.set("i","<Esc>", function()
 	vim.cmd("TroubleClose")
 if vim.fn.getreg("/") ~= "" then
   vim.cmd([[let @/ = ""]])
@@ -62,12 +67,13 @@ else
 end
 end, {expr=true, noremap=true}) -- Clear search pattern if there is any
 
-keymap.set("n", "b", "N", {noremap=true}) -- Going backwards in a search
+keymap.set("i", "<C-n>", "<C-o>n", {noremap=true}) -- Going forwards in a search
+keymap.set("i", "<C-p>", "<C-o>N", {noremap=true}) -- Going backwards in a search
 
-keymap.set("v","]]", ">gv", {noremap=true}) -- Indent
-keymap.set("v","[[", "<gv", {noremap=true}) -- Deindent
+keymap.set("v","<C-S-]>", ">gv", {noremap=true}) -- Indent
+keymap.set("v","<C-S-[>", "<gv", {noremap=true}) -- Deindent
 
-keymap.set("n", ";", ":", {noremap=true})
+--keymap.set("n", ";", ":", {noremap=true})
 
 
 
@@ -91,7 +97,7 @@ keymap.set("i", "<Enter>", function()
 	end
 end, {expr=true, noremap=true})
 
-keymap.set("n", "r", function()
+keymap.set("i", "<C-r>", function()
 	if vim.bo.filetype == 'tex' then
 		return "<Cmd>!pdflatex -synctex=1 --recorder -interaction=nonstopmode ".. vim.fn.shellescape(vim.fn.expand("%:p"),1).."<CR>"
 	else
