@@ -17,7 +17,7 @@ api.nvim_create_user_command("Errors", "Trouble",{})
 keymap.set('i', '<C-Left>', '<Esc>gea', { noremap = true }) -- Goes to end of previous word
 --keymap.set('n', 'l', 'a<C-Right><Esc>', {noremap=true}) -- Goes to beginning of next word
 
-keymap.set('i', '<C-S-Right>', '<C-o>v<C-Right>', {noremap=true})
+keymap.set('i', '<C-S-Right>', '<C-o>v<C-S-Right>', {noremap=true})
 keymap.set('i', '<C-S-Left>', '<C-o>v<C-Left>', {noremap=true})
 keymap.set('v', '<C-S-Left>', 'ge', { noremap = true })
 
@@ -71,17 +71,18 @@ keymap.set("i", '<C-l>', '<Esc>g$a', {noremap=true}) -- Go to end of line
 
 keymap.set("i", '<C-k>', '<Esc>g0i', {noremap=true}) -- Go to beginning of line
 
-keymap.set("v", 'l', 'g$a', {noremap=true}) -- Go to end of line
+keymap.set("i", "<C-.>", "<C-o>", {noremap=true}) -- Since <C-o> is being used already, I can't use it for recursive maps
+keymap.set("v", "'", 'g$', {noremap=true}) -- Go to end of line
 
-keymap.set("v", 'k', 'g0i', {noremap=true}) -- Go to beginning of line
+keymap.set("v", ';', 'g0', {noremap=true}) -- Go to beginning of line
 
-keymap.set("i","<C-S-k>","<C-o>vk",{noremap=true})
-keymap.set("i","<C-S-l>","<C-o>vl",{noremap=true})
-keymap.set("v","<C-S-k>","k",{noremap=true})
-keymap.set("v","<C-S-l>","l",{noremap=true})
+keymap.set("i","<C-S-'>","<C-.>v'",{remap=true})
+keymap.set("i","<C-S-;>","<C-.>v;",{remap=true})
+keymap.set("v","<C-S-'>","'",{remap=true})
+keymap.set("v","<C-S-;>",";",{remap=true})
 --keymap.set("i", "<Esc>", "<Esc>`^", {noremap=true})
 
-keymap.set("i", "<C-o>", "<Cmd>Telescope buffers<CR>", {remap=true})
+keymap.set("i", "<C-o>", "<Cmd>Telescope buffers<CR>", {noremap=true})
 
 -- keymap.set("v", "i", "a", {remap=true})
 

@@ -73,6 +73,7 @@ require("trouble").setup{
 local cmp = require('cmp')
 
   cmp.setup({
+       enabled= true,
        snippet = {
       -- REQUIRED - you must specify a snippet engine
       expand = function(args)
@@ -85,6 +86,8 @@ local cmp = require('cmp')
     },
     mapping = cmp.mapping.preset.insert({
       ['<Tab>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ["<C-p>"] = cmp.config.disable,
+      ["<C-n>"] = cmp.config.disable,
     }),
     sources = cmp.config.sources({{ name = 'nvim_lsp' }})
   })
@@ -93,6 +96,6 @@ local cmp = require('cmp')
 	  sources=cmp.config.sources({{ name = 'buffer' }})
 	})
  cmp.setup.filetype("gitcommit", {
-	  enabled= function() return false end
+	  enabled= false
 	})
    
