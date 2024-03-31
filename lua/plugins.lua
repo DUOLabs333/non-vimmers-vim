@@ -13,8 +13,15 @@ Plug('lervag/vimtex')
 
 Plug("folke/trouble.nvim")
 
+Plug("farmergreg/vim-lastplace")
+
+Plug('hrsh7th/cmp-nvim-lsp')
+Plug('hrsh7th/cmp-buffer')
+Plug('hrsh7th/nvim-cmp')
+
 vim.call('plug#end')
 
+-----------Spell Check---------------------
 vim.cmd([[let g:spelunker_check_type = 2]])
 vim.cmd([[let g:spelunker_highlight_type = 2]])
 vim.cmd("let g:enable_spelunker_vim = 0")
@@ -25,18 +32,26 @@ augroup spelunkerFileTypeSwitch
     autocmd BufNewFile,BufRead *.txt,*.md let b:enable_spelunker_vim = 1
 augroup END
 ]])
+
+
+------Auto Save------------------------
 require("auto-save").setup{
 	trigger_events={"TextChangedI","TextChanged"}
 }
+
+
+----Opening Buffers-----------------------------------
+
 
 require("telescope").setup{
   defaults={
   path_display={absolute}
 }
 }
-
+-------LaTex-------------------------
 vim.cmd([[let g:vimtex_compiler_enabled=0]])
 
+--------------LSP------------------------
 require("trouble").setup{
     icons = false,
     fold_open = "v", -- icon used for open folds
@@ -51,3 +66,33 @@ require("trouble").setup{
     },
     use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
 }
+
+
+---------Autocompletion-----------------------
+
+local cmp = require('cmp')
+
+  cmp.setup({
+       snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+      end,
+    },
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<Tab>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
+    sources = cmp.config.sources({{ name = 'nvim_lsp' }})
+  })
+
+  cmp.setup.filetype("text", {
+	  sources=cmp.config.sources({{ name = 'buffer' }})
+	})
+ cmp.setup.filetype("gitcommit", {
+	  enabled= function() return false end
+	})
+   

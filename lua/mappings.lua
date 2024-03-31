@@ -40,17 +40,45 @@ keymap.set('v','<Down>', 'gj', {noremap=true})
 keymap.set('v','<C-S-Up>', '<Up>', {remap=true}) -- Respect wrapped lines
 keymap.set('v','<C-S-Down>', '<Down>', {remap=true})
 
-keymap.set('i','<Up>', '<C-o>gk', {noremap=true})
-keymap.set('i','<Down>', '<C-o>gj', {noremap=true})
+cmp=require("cmp")
+keymap.set('i','<Up>', function()
+	if cmp.visible() then
+		cmp.select_prev_item({ behavior = cmp.SelectBehavior})
+		return ""
+	else
+		return "<C-o>gk"
+	end
+end, {expr=true, noremap=true})
+
+keymap.set('i','<Down>', function()
+	if cmp.visible() then
+		cmp.select_next_item({ behavior = cmp.SelectBehavior})
+		return ""
+	else
+		return "<C-o>gj"
+	end
+end, {expr=true, noremap=true})
+
+keymap.set("i", "<C-n>", "<C-o>n", {noremap=true}) -- Going forwards in a search
+keymap.set("i", "<C-p>", "<C-o>N", {noremap=true}) -- Going backwards in a search
+
 
 keymap.set("v", "<C-x>", '"+d', { noremap = true }) -- Cut selection
 
---keymap.set('i', '<C-e>', '<C-o>:', {noremap=true}) -- Makes it easier to get to commands
+keymap.set('i', '<C-e>', '<C-o>:', {noremap=true}) -- Makes it easier to get to commands
 
 keymap.set("i", '<C-l>', '<Esc>g$a', {noremap=true}) -- Go to end of line
 
 keymap.set("i", '<C-k>', '<Esc>g0i', {noremap=true}) -- Go to beginning of line
 
+keymap.set("v", 'l', 'g$a', {noremap=true}) -- Go to end of line
+
+keymap.set("v", 'k', 'g0i', {noremap=true}) -- Go to beginning of line
+
+keymap.set("i","<C-S-k>","<C-o>vk",{noremap=true})
+keymap.set("i","<C-S-l>","<C-o>vl",{noremap=true})
+keymap.set("v","<C-S-k>","k",{noremap=true})
+keymap.set("v","<C-S-l>","l",{noremap=true})
 --keymap.set("i", "<Esc>", "<Esc>`^", {noremap=true})
 
 keymap.set("i", "<C-o>", "<Cmd>Telescope buffers<CR>", {remap=true})
@@ -67,8 +95,9 @@ else
 end
 end, {expr=true, noremap=true}) -- Clear search pattern if there is any
 
-keymap.set("i", "<C-n>", "<C-o>n", {noremap=true}) -- Going forwards in a search
-keymap.set("i", "<C-p>", "<C-o>N", {noremap=true}) -- Going backwards in a search
+keymap.set("i", "<C-f>", function()
+return "<C-o>/"
+end, {expr=true, noremap=true})
 
 keymap.set("v","<C-S-]>", ">gv", {noremap=true}) -- Indent
 keymap.set("v","<C-S-[>", "<gv", {noremap=true}) -- Deindent
@@ -77,8 +106,7 @@ keymap.set("v","<C-S-[>", "<gv", {noremap=true}) -- Deindent
 
 
 
--- LaTex related commands
------------------------------------
+------------------LaTex related commands-----------------------------------
 keymap.set("i", "<Tab>", function()
 	if vim.bo.filetype == 'tex' then
 		return [[\tab]]
