@@ -46,6 +46,9 @@ require("auto-save").setup{
 require("telescope").setup{
   defaults={
   path_display={absolute}
+},
+pickers={
+	initial_mode = "insert",
 }
 }
 -------LaTex-------------------------
@@ -89,7 +92,7 @@ local cmp = require('cmp')
       ["<C-p>"] = cmp.config.disable,
       ["<C-n>"] = cmp.config.disable,
     }),
-    sources = cmp.config.sources({{ name = 'nvim_lsp' }})
+    sources = cmp.config.sources({{ name = 'nvim_lsp' }}, {{ name = 'buffer' }})
   })
 
   cmp.setup.filetype("text", {

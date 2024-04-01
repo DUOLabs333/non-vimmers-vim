@@ -9,17 +9,25 @@ keymap.set("v", "<C-c>", '"+y', { noremap = true }) -- Copy to clipboard
 keymap.set('i', '<C-z>', '<Cmd>u<CR>', { noremap = true }) --Undo
 keymap.set('i', '<C-y>', '<C-o><C-r>', { noremap = true }) -- Redo (Could replace with <C-o><C-r>)
 
+keymap.set("i", "<C-.>", "<C-o>", {noremap=true}) -- Since <C-o> is being used already, I can't use it for recursive maps
+
 --keymap.set('n', 'c', 'Zl',{remap=true}) -- Activate spellcheck corrections
 
 api.nvim_create_user_command("Spell", "call spelunker#correct_from_list()",{})
 api.nvim_create_user_command("Errors", "Trouble",{})
 
-keymap.set('i', '<C-Left>', '<Esc>gea', { noremap = true }) -- Goes to end of previous word
---keymap.set('n', 'l', 'a<C-Right><Esc>', {noremap=true}) -- Goes to beginning of next word
+keymap.set('i', '<C-Left>', '<Esc>bi', { noremap = true }) -- Goes to beginning of previous word
+keymap.set('i', '<C-Right>', '<Esc>ea', { noremap = true }) -- Goes to end of next word
 
-keymap.set('i', '<C-S-Right>', '<C-o>v<C-S-Right>', {noremap=true})
-keymap.set('i', '<C-S-Left>', '<C-o>v<C-Left>', {noremap=true})
-keymap.set('v', '<C-S-Left>', 'ge', { noremap = true })
+
+keymap.set("v", "<C-Left>", "b", {noremap=true})
+keymap.set("v", "<C-Right>", "e", {noremap=true})
+
+keymap.set('i', '<C-S-Right>', '<C-.>v<C-Right>', {remap=true})
+keymap.set('i', '<C-S-Left>', '<Left><C-.>v<C-Left>', {remap=true}) -- Have to move cursor back one character before continuing as <C-o>/<C-.> moves the cursor one character to the right 
+
+keymap.set('v', '<C-S-Left>', '<C-Left>', { remap = true })
+keymap.set('v', '<C-S-Right>', '<C-Right>', { remap = true })
 
 --keymap.set('n', 'i', 'a', {noremap=true})
 
@@ -39,6 +47,8 @@ keymap.set('v','<Down>', 'gj', {noremap=true})
 
 keymap.set('v','<C-S-Up>', '<Up>', {remap=true}) -- Respect wrapped lines
 keymap.set('v','<C-S-Down>', '<Down>', {remap=true})
+
+keymap.set("i", "<Space>", "<Space><C-g>u", {noremap=true}) -- Set undo per word
 
 cmp=require("cmp")
 keymap.set('i','<Up>', function()
@@ -67,11 +77,10 @@ keymap.set("v", "<C-x>", '"+d', { noremap = true }) -- Cut selection
 
 keymap.set('i', '<C-e>', '<C-o>:', {noremap=true}) -- Makes it easier to get to commands
 
-keymap.set("i", '<C-l>', '<Esc>g$a', {noremap=true}) -- Go to end of line
+keymap.set("i", "<C-'>", '<Esc>g$a', {noremap=true}) -- Go to end of line
 
-keymap.set("i", '<C-k>', '<Esc>g0i', {noremap=true}) -- Go to beginning of line
+keymap.set("i", '<C-;>', '<Esc>g0i', {noremap=true}) -- Go to beginning of line
 
-keymap.set("i", "<C-.>", "<C-o>", {noremap=true}) -- Since <C-o> is being used already, I can't use it for recursive maps
 keymap.set("v", "'", 'g$', {noremap=true}) -- Go to end of line
 
 keymap.set("v", ';', 'g0', {noremap=true}) -- Go to beginning of line
