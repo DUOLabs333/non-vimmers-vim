@@ -36,7 +36,18 @@ augroup END
 
 ------Auto Save------------------------
 require("auto-save").setup{
-	trigger_events={"TextChangedI","TextChanged"}
+	trigger_events={"TextChangedI","TextChanged"},
+	condition = function(buf)
+		local fn = vim.fn
+		local utils = require("auto-save.utils.data")
+
+		if
+			fn.getbufvar(buf, "&modifiable") == 1 and
+			utils.not_in(fn.getbufvar(buf, "&filetype"), {}) and (vim.fn.empty(vim.fn.glob(vim.fn.expand("%:p")))==0) then -- Check that file exists, so we don't accidentally create a file by using a buffer as scratch
+			return true -- met condition(s), can save
+		end
+		return false -- can't save
+	end,
 }
 
 
@@ -45,12 +56,8 @@ require("auto-save").setup{
 
 require("telescope").setup{
   defaults={
-  path_display={absolute}
-},
-pickers={
-	initial_mode = "insert",
-}
-}
+  path_display={absolute}, 
+}}
 -------LaTex-------------------------
 vim.cmd([[let g:vimtex_compiler_enabled=0]])
 

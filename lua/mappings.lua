@@ -85,7 +85,7 @@ keymap.set("v", "'", 'g$', {noremap=true}) -- Go to end of line
 
 keymap.set("v", ';', 'g0', {noremap=true}) -- Go to beginning of line
 
-keymap.set("i","<C-S-'>","<C-.>v'",{remap=true})
+keymap.set("i","<C-S-'>","<C-.>v'<Left>",{remap=true})
 keymap.set("i","<C-S-;>","<C-.>v;",{remap=true})
 keymap.set("v","<C-S-'>","'",{remap=true})
 keymap.set("v","<C-S-;>",";",{remap=true})
