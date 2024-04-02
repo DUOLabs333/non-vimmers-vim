@@ -58,6 +58,7 @@ require("telescope").setup{
   defaults={
   path_display={absolute}, 
 }}
+
 -------LaTex-------------------------
 vim.cmd([[let g:vimtex_compiler_enabled=0]])
 

@@ -52,3 +52,5 @@ vim.cmd([[autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c'
 vim.cmd([[autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>4;2m") | endif]])
 --vim.api.nvim_create_autocmd("InsertEnter", { pattern = "*", callback = function() vim.diagnostic.config({ signs = true, update_in_insert=true}) end }) 
 --vim.api.nvim_create_autocmd("InsertLeave", { pattern = "*", callback = function() vim.diagnostic.config({ signs = true, update_in_insert=true}) vim.cmd("TroubleClose") end })
+
+vim.cmd([[set linebreak]])
