@@ -110,6 +110,15 @@ else
 end
 end, {expr=true, noremap=true}) -- Clear search pattern if there is any
 
+
+keymap.set("i", "<C-i>", function()
+	if vim.fn.spellbadword(vim.fn.expand("<cword>"))[1]~="" then
+		return "<Cmd>call spelunker#correct_from_list()<CR>"
+	else
+		return "<C-i>"
+	end
+end, {expr=true, noremap=true})
+
 keymap.set("i", "<C-f>", function()
 return "<C-o>/"
 end, {expr=true, noremap=true})

@@ -18,7 +18,6 @@ Plug("farmergreg/vim-lastplace")
 Plug('hrsh7th/cmp-nvim-lsp')
 Plug('hrsh7th/cmp-buffer')
 Plug('hrsh7th/nvim-cmp')
-
 vim.call('plug#end')
 
 -----------Spell Check---------------------
@@ -78,7 +77,6 @@ require("trouble").setup{
     use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
 }
 
-
 ---------Autocompletion-----------------------
 
 local cmp = require('cmp')
@@ -100,7 +98,8 @@ local cmp = require('cmp')
       ["<C-p>"] = cmp.config.disable,
       ["<C-n>"] = cmp.config.disable,
     }),
-    sources = cmp.config.sources({{ name = 'nvim_lsp' }}, {{ name = 'buffer' }})
+    sources = cmp.config.sources({{ name = 'nvim_lsp' }}, {{ name = 'buffer' }}
+    )
   })
 
   cmp.setup.filetype("text", {
