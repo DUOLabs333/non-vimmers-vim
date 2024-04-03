@@ -55,8 +55,23 @@ require("auto-save").setup{
 
 require("telescope").setup{
   defaults={
-  path_display={absolute}, 
-}}
+  path_display={absolute}
+  },
+  pickers = {
+    buffers = {
+      attach_mappings = function()
+        require("telescope.actions.set").select:enhance({
+          post = function()
+            vim.schedule(function()
+              vim.cmd([[startinsert]])
+            end)
+          end,
+        })
+        return true
+      end,
+    },
+  },
+}
 
 -------LaTex-------------------------
 vim.cmd([[let g:vimtex_compiler_enabled=0]])
