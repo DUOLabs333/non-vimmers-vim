@@ -9,6 +9,10 @@ function file_exists(name)
 end
 function autosaveSession()
     vim.cmd([[let @/ = ""]]) -- Initialize the search register to the empty string
+    vim.cmd("highlight Pmenu ctermbg=black")
+    vim.cmd("highlight Pmenu ctermfg=white")
+    vim.cmd("set whichwrap+=<,>,[,]")
+    
     if true then 
 	return -- Disable for now (does more harm than good)
     end
@@ -53,4 +57,7 @@ vim.cmd([[autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1
 --vim.api.nvim_create_autocmd("InsertEnter", { pattern = "*", callback = function() vim.diagnostic.config({ signs = true, update_in_insert=true}) end }) 
 --vim.api.nvim_create_autocmd("InsertLeave", { pattern = "*", callback = function() vim.diagnostic.config({ signs = true, update_in_insert=true}) vim.cmd("TroubleClose") end })
 
-vim.cmd([[set linebreak]])
+vim.cmd([[
+set linebreak
+set number
+]])

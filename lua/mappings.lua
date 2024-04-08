@@ -11,7 +11,8 @@ keymap.set('i', '<C-y>', '<C-o><C-r>', { noremap = true }) -- Redo (Could replac
 
 keymap.set("i", "<C-.>", "<C-o>", {noremap=true}) -- Since <C-o> is being used already, I can't use it for recursive maps
 
---keymap.set('n', 'c', 'Zl',{remap=true}) -- Activate spellcheck corrections
+keymap.set("i", "<C-,>", "<C-o>v", {noremap=true})
+
 
 api.nvim_create_user_command("Spell", "call spelunker#correct_from_list()",{})
 api.nvim_create_user_command("Errors", "Trouble",{})
@@ -33,6 +34,8 @@ keymap.set('v', '<C-S-Right>', '<C-Right>', { remap = true })
 
 
 keymap.set('i', '<C-d>', '<Esc><Cmd>t.<CR>ka', {noremap=true}) -- Duplicate line without moving cursor
+
+keymap.set("i", "<C-g>", "<C-o>:", {noremap=true}) -- Go to line number
 
 keymap.set('i', '<C-q>', '<Cmd>qa<CR>', {noremap=true}) -- Quit without saving
 
@@ -111,11 +114,15 @@ end
 end, {expr=true, noremap=true}) -- Clear search pattern if there is any
 
 
+local hover=require("hover")
+
 keymap.set("i", "<C-i>", function()
 	if vim.fn.spellbadword(vim.fn.expand("<cword>"))[1]~="" then
 		return "<Cmd>call spelunker#correct_from_list()<CR>"
 	else
-		return "<C-i>"
+		hover.hover()
+		return
+		--return "<C-i>"
 	end
 end, {expr=true, noremap=true})
 
@@ -123,8 +130,8 @@ keymap.set("i", "<C-f>", function()
 return "<C-o>/"
 end, {expr=true, noremap=true})
 
-keymap.set("v","<C-S-]>", ">gv", {noremap=true}) -- Indent
-keymap.set("v","<C-S-[>", "<gv", {noremap=true}) -- Deindent
+keymap.set("v","<Tab>", ">gv", {noremap=true}) -- Indent
+keymap.set("v","<S-Tab>", "<gv", {noremap=true}) -- Deindent
 
 --keymap.set("n", ";", ":", {noremap=true})
 
