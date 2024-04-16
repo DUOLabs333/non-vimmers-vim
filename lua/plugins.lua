@@ -29,7 +29,7 @@ vim.cmd("let g:enable_spelunker_vim = 0")
 vim.cmd([[
 augroup spelunkerFileTypeSwitch
     autocmd!
-    autocmd BufNewFile,BufRead *.txt,*.md let b:enable_spelunker_vim = 1
+    autocmd BufNewFile,BufRead *.txt,*.md,*.tex let b:enable_spelunker_vim = 1
 augroup END
 ]])
 
