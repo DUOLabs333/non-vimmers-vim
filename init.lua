@@ -53,6 +53,8 @@ vim.diagnostic.config({ signs = true, update_in_insert=true, virtual_text=false}
 
 vim.cmd([[autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif " notification after file change autocmd FileChangedShellPost * \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None]]) -- Automatically update file if it has been changed by an external process
 
+vim.cmd([[autocmd FileType * set formatoptions-=ro]]) -- Disable auto-comment on <CR>
+
 --vim.cmd([[autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>4;2m") | endif]])
 --vim.api.nvim_create_autocmd("InsertEnter", { pattern = "*", callback = function() vim.diagnostic.config({ signs = true, update_in_insert=true}) end }) 
 --vim.api.nvim_create_autocmd("InsertLeave", { pattern = "*", callback = function() vim.diagnostic.config({ signs = true, update_in_insert=true}) vim.cmd("TroubleClose") end })
