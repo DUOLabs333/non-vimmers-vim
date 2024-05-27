@@ -37,7 +37,7 @@ keymap.set('i', '<C-d>', '<Esc><Cmd>t.<CR>ka', {noremap=true}) -- Duplicate line
 
 keymap.set("i", "<C-g>", "<C-o>:", {noremap=true}) -- Go to line number
 
-keymap.set('i', '<C-q>', '<Cmd>qa<CR>', {noremap=true}) -- Quit without saving
+keymap.set('i', '<C-q>', '<Cmd>qa!<CR>', {noremap=true}) -- Quit without saving
 
 keymap.set('i', '<C-w>', '<Cmd>:bd<CR>', {noremap=true}) -- Close window
 
@@ -92,6 +92,7 @@ keymap.set("i","<C-S-'>","<C-.>v'<Left>",{remap=true})
 keymap.set("i","<C-S-;>","<C-.>v;",{remap=true})
 keymap.set("v","<C-S-'>","'<Left>",{remap=true})
 keymap.set("v","<C-S-;>",";",{remap=true})
+
 --keymap.set("i", "<Esc>", "<Esc>`^", {noremap=true})
 
 keymap.set("i", "<C-o>", "<Cmd>Telescope buffers<CR>", {noremap=true})
@@ -135,14 +136,13 @@ keymap.set("v","<S-Tab>", "<gv", {noremap=true}) -- Deindent
 
 --keymap.set("n", ";", ":", {noremap=true})
 
-
-
 ------------------LaTex related commands-----------------------------------
 keymap.set("i", "<Tab>", function()
+	local header="<C-g>u"
 	if vim.bo.filetype == 'tex' then
-		return [[\tab]]
+		return header..[[\tab]]
 	else
-		return "<Tab>"
+		return header.."<Tab>"
 	end
 end, {expr=true, noremap=true})
 
@@ -156,9 +156,32 @@ keymap.set("i", "<Enter>", function()
 	end
 end, {expr=true, noremap=true})
 
+keymap.set("n", "<Enter>", function()
+	if vim.bo.buftype == 'terminal' then
+		return ":bd!<CR>i"
+	else
+			return "<Enter>"
+	end
+end, {expr=true, noremap=true})
+
+function close_if_success(a, exit_code, b)
+	vim.api.nvim_input("<C-\\><C-n><Cmd>$<CR>$")
+	if exit_code == 0 then
+		vim.api.nvim_input("<CR>")
+	end
+end
+
+function run_command(cmd)
+	vim.fn.termopen(cmd, {
+	on_exit= close_if_success,
+	stderr_buffered=false,
+	stdout_buffered=false
+	})
+end
+
 keymap.set("i", "<C-r>", function()
 	if vim.bo.filetype == 'tex' then
-		return "<Cmd>!pdflatex -synctex=1 --recorder -interaction=nonstopmode ".. vim.fn.shellescape(vim.fn.expand("%:p"),1).."<CR>"
+		return "<Cmd>!pdflatex -synctex=1 --recorder -interaction=nonstopmode ".. vim.fn.shellescape(vim.fn.expand("%:p"),1).."<CR>" -- Switch to using run_command
 	else
 		return "r"
 	end
