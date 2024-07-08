@@ -100,7 +100,13 @@ keymap.set("i", "<C-o>", "<Cmd>Telescope buffers<CR>", {noremap=true})
 -- keymap.set("v", "i", "a", {remap=true})
 
 keymap.set("i","<Esc>", function()
-	vim.cmd("TroubleClose")
+	
+	--vim.cmd("TroubleClose") -- This doesn't work, even though it should.
+	if (require("trouble").is_open()) then
+		return "<Cmd>TroubleClose<CR>"
+	end
+	
+	--vim.api.nvim_echo({{"H"}}, false, {})
 	if cmp.visible() then
 	cmp.abort()
 	return ""
