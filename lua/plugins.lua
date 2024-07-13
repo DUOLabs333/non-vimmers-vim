@@ -26,6 +26,7 @@ Plug('nvim-tree/nvim-web-devicons')
 Plug('lewis6991/gitsigns.nvim')
 Plug('romgrk/barbar.nvim')
 
+Plug("neovim/nvim-lspconfig")
 vim.call('plug#end')
 
 -----------Spell Check---------------------
@@ -100,6 +101,7 @@ require("trouble").setup{
     use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
 }
 
+require'lspconfig'.pylsp.setup{}
 ---------Autocompletion-----------------------
 
 local cmp = require('cmp')
