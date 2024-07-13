@@ -101,7 +101,7 @@ require("trouble").setup{
     use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
 }
 
-require'lspconfig'.pylsp.setup{}
+require'lspconfig'.jedi_language_server.setup{}
 ---------Autocompletion-----------------------
 
 local cmp = require('cmp')

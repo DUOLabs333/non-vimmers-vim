@@ -1,7 +1,7 @@
 if false then
 	vim.lsp.start({
 	  name = 'Jedi',
-	  cmd = {"jedi-language-server"},
+	  cmd = {"pylsp"},
 	  root_dir=HOME
 	})
 end
