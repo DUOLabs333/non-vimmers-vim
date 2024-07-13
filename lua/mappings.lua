@@ -142,6 +142,14 @@ keymap.set("v","<S-Tab>", "<gv", {noremap=true}) -- Deindent
 
 --keymap.set("n", ";", ":", {noremap=true})
 
+
+vim.cmd([[
+	set wildcharm=<C-Z>
+	cnoremap <expr> <up> wildmenumode() ? "\<left>" : "\<up>"
+	cnoremap <expr> <down> wildmenumode() ? "\<right>" : "\<down>"
+	cnoremap <expr> <left> wildmenumode() ? "\<up>" : "\<left>"
+	cnoremap <expr> <right> wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
+]])
 ------------------LaTex related commands-----------------------------------
 keymap.set("i", "<Tab>", function()
 	local header="<C-g>u"

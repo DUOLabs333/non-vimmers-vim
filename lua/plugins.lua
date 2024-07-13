@@ -19,6 +19,13 @@ Plug("farmergreg/vim-lastplace")
 Plug('hrsh7th/cmp-nvim-lsp')
 Plug('hrsh7th/cmp-buffer')
 Plug('hrsh7th/nvim-cmp')
+
+Plug('mhinz/vim-signify')
+
+Plug('nvim-tree/nvim-web-devicons')
+Plug('lewis6991/gitsigns.nvim')
+Plug('romgrk/barbar.nvim')
+
 vim.call('plug#end')
 
 -----------Spell Check---------------------

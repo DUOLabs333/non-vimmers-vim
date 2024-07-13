@@ -30,6 +30,9 @@ function autosaveSession()
   
   
   vim.loop.new_timer():start(0,500,vim.schedule_wrap(function()
+    if true then
+    	return
+    end
     os.remove(session_file)
     vim.cmd("silent! argd* | " .. "mksession! "..session_file) -- The argd is needed, else even if you delete a buffer, if you passed it in as an argument, it will be restored anyway
   end))
