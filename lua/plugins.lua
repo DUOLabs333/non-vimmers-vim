@@ -28,6 +28,7 @@ Plug('romgrk/barbar.nvim')
 
 Plug("neovim/nvim-lspconfig")
 vim.call('plug#end')
+vim.cmd("filetype indent off")  -- Apparent vim-plug turns it on by default
 
 -----------Spell Check---------------------
 vim.cmd([[let g:spelunker_check_type = 2]])

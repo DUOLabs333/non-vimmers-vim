@@ -3,4 +3,3 @@ vim.lsp.start({
   cmd = {"/usr/bin/clangd"},
   root_dir=HOME
 })
-
