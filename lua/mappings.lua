@@ -13,7 +13,7 @@ keymap.set("i", "<C-.>", "<C-o>", {noremap=true}) -- Since <C-o> is being used a
 
 keymap.set("i", "<C-,>", "<C-o>v", {noremap=true})
 
-
+keymap.set("i", "<C-a>", "<Esc>gg0i<C-o>vG$", {noremap=true})
 api.nvim_create_user_command("Spell", "call spelunker#correct_from_list()",{})
 api.nvim_create_user_command("Errors", "Trouble",{})
 
