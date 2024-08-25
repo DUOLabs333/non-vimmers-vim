@@ -103,6 +103,7 @@ require("trouble").setup{
 }
 
 require'lspconfig'.jedi_language_server.setup{}
+require'lspconfig'.typst_lsp.setup{}
 ---------Autocompletion-----------------------
 
 local cmp = require('cmp')
@@ -134,6 +135,8 @@ local cmp = require('cmp')
  cmp.setup.filetype("gitcommit", {
 	  enabled= false
 	})
+ -- vim.cmd([[hi CmpItemKind guifg=#d79921 guibg=#3c3836]])
+ vim.cmd("hi! link CmpItemKind @lsp.type.function.cpp") -- Fixes the "kind" part of the display so that it is now light blue instead of black
 -----------------Hover------------------------------
 require("hover").setup {
             init = function()
