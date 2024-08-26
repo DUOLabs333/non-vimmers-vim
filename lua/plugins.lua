@@ -5,6 +5,7 @@ vim.call('plug#begin')
 Plug("kamykn/spelunker.vim")
 	
 Plug('pocco81/auto-save.nvim')
+Plug("rmagatti/auto-session")
 
 Plug('nvim-lua/plenary.nvim')
 Plug('nvim-telescope/telescope.nvim', {['tag']= '0.1.6'})
@@ -27,6 +28,7 @@ Plug('lewis6991/gitsigns.nvim')
 Plug('romgrk/barbar.nvim')
 
 Plug("neovim/nvim-lspconfig")
+Plug("sontungexpt/better-diagnostic-virtual-text")
 vim.call('plug#end')
 vim.cmd("filetype indent off")  -- Apparent vim-plug turns it on by default
 
@@ -160,3 +162,8 @@ require("hover").setup {
             },
             mouse_delay = 1000
         }
+
+
+------- Auto-Session ---------------------
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+require('auto-session').setup {}
