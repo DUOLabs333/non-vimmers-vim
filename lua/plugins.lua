@@ -106,6 +106,8 @@ require("trouble").setup{
 
 require'lspconfig'.jedi_language_server.setup{}
 require'lspconfig'.typst_lsp.setup{}
+require'lspconfig'.clangd.setup{}
+require'lspconfig'.rust_analyzer.setup{}
 ---------Autocompletion-----------------------
 
 local cmp = require('cmp')
@@ -165,5 +167,9 @@ require("hover").setup {
 
 
 ------- Auto-Session ---------------------
-vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
-require('auto-session').setup {}
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions,globals"
+require('auto-session').setup {
+	pre_save_cmds= {
+		function() vim.api.nvim_exec_autocmds('User', {pattern = 'SessionSavePre'}) end -- Important, so barbar can maintain buffer order
+	}
+}

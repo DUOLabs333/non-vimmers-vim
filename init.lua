@@ -30,20 +30,21 @@ set linebreak
 set number
 ]])
 
---[[
-vim.o.updatetime = 100
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-  group = vim.api.nvim_create_augroup("float_diagnostic", { clear = false }),
-  callback = function ()
-    vim.diagnostic.open_float(nil, {focus=false})
-  end
-})
-]]--
+if false then -- Two different implementations of LSP diagnostics
+	vim.o.updatetime = 100
+	vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+	  group = vim.api.nvim_create_augroup("float_diagnostic", { clear = false }),
+	  callback = function ()
+	    vim.diagnostic.open_float(nil, {focus=false})
+	  end
+	})
+else
 
-vim.api.nvim_create_autocmd("LspAttach", {
-	callback=function(args)
-		require("better-diagnostic-virtual-text.api").setup_buf(args.buf, {})
-	end
-})
+	vim.api.nvim_create_autocmd("LspAttach", {
+		callback=function(args)
+			require("better-diagnostic-virtual-text.api").setup_buf(args.buf, {})
+		end
+	})
+end
 
 vim.cmd("hi Todo guifg=Yellow")
