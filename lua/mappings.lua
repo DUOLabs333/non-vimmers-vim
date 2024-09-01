@@ -125,7 +125,8 @@ local hover=require("hover")
 
 keymap.set("i", "<C-i>", function()
 	if vim.fn.spellbadword(vim.fn.expand("<cword>"))[1]~="" then
-		return "<Cmd>call spelunker#correct_from_list()<CR>"
+		--return "<Cmd>call spelunker#correct_from_list()<CR>"
+		return "<C-o>z="
 	else
 		hover.hover()
 		return

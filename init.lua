@@ -48,3 +48,7 @@ else
 end
 
 vim.cmd("hi Todo guifg=Yellow")
+
+vim.cmd("hi SpellBad gui=underline guifg=grey")
+vim.cmd("hi SpellLocal gui=underline")
+vim.cmd("set spell spelllang=en_us")
