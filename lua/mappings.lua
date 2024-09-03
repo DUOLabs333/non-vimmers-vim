@@ -124,7 +124,11 @@ end, {expr=true, noremap=true}) -- Clear search pattern if there is any
 local hover=require("hover")
 
 keymap.set("i", "<C-i>", function()
-	if vim.fn.spellbadword(vim.fn.expand("<cword>"))[1]~="" then
+	local highlight_group = vim.api.nvim_command_output([[echo synIDattr(synID(line('.'), col('.'), 1), 'name')]])
+
+	local is_word = (string.find(highlight_group, "Comment") or string.find(highlight_group, "String") or (vim.bo.filetype == "text"))
+	
+	if is_word and (vim.fn.spellbadword(vim.fn.expand("<cword>"))[1]~="") then
 		--return "<Cmd>call spelunker#correct_from_list()<CR>"
 		return "<C-o>z="
 	else
