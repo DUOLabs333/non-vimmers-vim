@@ -108,7 +108,14 @@ require("trouble").setup{
 }
 
 require'lspconfig'.jedi_language_server.setup{}
-require'lspconfig'.typst_lsp.setup{}
+-- require'lspconfig'.typst_lsp.setup{}
+require'lspconfig'.tinymist.setup{
+	cmd = {"tinymist-linux-arm64"},
+	root_dir = function(fname) 
+	return vim.env.HOME
+	end,
+	-- rootDir= "/home/system"
+}
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 ---------Autocompletion-----------------------
