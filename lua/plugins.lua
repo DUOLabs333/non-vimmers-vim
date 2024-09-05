@@ -114,7 +114,8 @@ require'lspconfig'.tinymist.setup{
 	root_dir = function(fname) 
 	return vim.env.HOME
 	end,
-	-- rootDir= "/home/system"
+
+	settings = {exportPdf = "onSave"},
 }
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.rust_analyzer.setup{}
