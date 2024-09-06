@@ -89,7 +89,9 @@ require("telescope").setup{
 }
 
 -------LaTex-------------------------
-vim.cmd([[let g:vimtex_compiler_enabled=0]])
+vim.cmd([[let g:vimtex_quickfix_ignore_filters = ['Warning:', 'Overfull'] ]])
+vim.cmd("let g:vimtex_view_automatic = 0")
+vim.cmd("let g:vimtex_quickfix_enabled = 0")
 
 --------------LSP------------------------
 require("trouble").setup{

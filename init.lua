@@ -7,6 +7,7 @@ function vimInit()
     vim.cmd("highlight Pmenu ctermfg=white")
 
     vim.cmd("set whichwrap+=<,>,[,]")  
+
 end
 
 vim.cmd([[autocmd VimEnter * nested lua vimInit() ]]) -- Reload session when starting with no arguments
@@ -52,3 +53,6 @@ vim.cmd("hi Todo guifg=Yellow")
 vim.cmd("hi SpellBad gui=underline guifg=grey")
 vim.cmd("hi SpellLocal gui=underline")
 vim.cmd("set spell spelllang=en_us")
+
+
+vim.cmd([[autocmd BufEnter *.tex VimtexCompile]])
