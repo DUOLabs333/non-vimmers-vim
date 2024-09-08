@@ -56,3 +56,81 @@ vim.cmd("set spell spelllang=en_us")
 
 
 vim.cmd([[autocmd BufEnter *.tex VimtexCompile]])
+
+local function serialize(t)
+  local serializedValues = {}
+  local value, serializedValue
+  for i=1,#t do
+    value = t[i]
+    serializedValue = type(value)=='table' and serialize(value) or value
+    table.insert(serializedValues, serializedValue)
+  end
+  return string.format("{ %s }", table.concat(serializedValues, ', ') )
+end
+
+local function getDirectoryFromPath(path)
+    -- Remove trailing slash if present
+    path = path:gsub("/$", "")
+    
+    -- Split the path into components
+    local components = {}
+    for component in path:gmatch("[^/]+") do
+        table.insert(components, component)
+    end
+
+    -- If there are at least two components (root and one directory),
+    -- return the second-to-last component
+    if #components >= 2 then
+        return components[#components - 1]
+    else
+        return nil  -- or you could return an empty string ""
+    end
+end
+
+local function getFileNameWithoutExtension(path)
+    -- Extract the file name with extension
+    local fileName = path:match("([^/]+)$")
+    
+    -- If no file name found, return nil
+    if not fileName then
+        return nil
+    end
+    
+    -- Remove the extension
+    local nameWithoutExtension = fileName:match("(.+)%..+")
+    
+    -- If there was no extension, return the original file name
+    return nameWithoutExtension or fileName
+end
+
+vim.api.nvim_create_autocmd({"BufWritePost"}, {
+	pattern = {"*.typ"},
+	callback = function(ev)
+		
+		vim.notify("BufEnter autocmd fired!")
+		local full_path=vim.api.nvim_buf_get_name(ev.buf)
+		--local full_path=ev.file
+
+
+		local write_location=full_path:gsub("%.typ$", ".pdf")
+
+		local directory = getDirectoryFromPath(full_path)
+
+		local file = getFileNameWithoutExtension(full_path)
+		
+		vim.cmd(string.format([[silent exec "!typst compile \"%s\" --root ~ --input FILE_PATH=\"%s\" --input FILE_DIR=\"%s\" \"%s\" &"]], full_path, file, directory, write_location))
+
+	end
+})
+
+
+vim.api.nvim_create_autocmd({"TextChangedI","TextChanged"},{
+	nested = true,
+	callback = function(ev)
+		local buf = ev.buf
+
+		if (vim.fn.empty(vim.api.nvim_buf_get_name(0)) == 0) and (vim.fn.getbufvar(buf, "&modifiable") == 1) then
+			vim.cmd(string.format("%i,%ibufdo! :w", buf, buf))
+		end
+	end
+})

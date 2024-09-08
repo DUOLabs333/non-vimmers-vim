@@ -4,7 +4,7 @@ vim.call('plug#begin')
 
 -- Plug("kamykn/spelunker.vim")
 
-Plug('pocco81/auto-save.nvim')
+--Plug('pocco81/auto-save.nvim')
 Plug("rmagatti/auto-session")
 
 Plug('nvim-lua/plenary.nvim')
@@ -49,6 +49,7 @@ augroup END
 
 
 ------Auto Save------------------------
+--[[
 require("auto-save").setup{
 	trigger_events={"TextChangedI","TextChanged"},
 	condition = function(buf)
@@ -63,8 +64,7 @@ require("auto-save").setup{
 		return false -- can't save
 	end,
 }
-
-
+]]--
 ----Opening Buffers-----------------------------------
 
 
@@ -106,7 +106,7 @@ require("trouble").setup{
         hint = "hint",
         information = "info"
     },
-    use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
+use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
 }
 
 require'lspconfig'.jedi_language_server.setup{}
@@ -117,7 +117,8 @@ require'lspconfig'.tinymist.setup{
 	return vim.env.HOME
 	end,
 
-	settings = {exportPdf = "onSave"},
+	--settings = {exportPdf = "onSave", typstExtraArgs = {"--input", "TINYMIST_FILEPATH='name'"}},
+	
 }
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.rust_analyzer.setup{}

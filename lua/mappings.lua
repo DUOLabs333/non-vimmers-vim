@@ -41,7 +41,7 @@ keymap.set('i', '<C-q>', '<Cmd>qa!<CR>', {noremap=true}) -- Quit without saving
 
 keymap.set('i', '<C-w>', '<Cmd>:bd<CR>', {noremap=true}) -- Close window
 
-keymap.set('i', '<C-s>', '<Cmd>w<CR>', {noremap=true}) -- Save
+keymap.set('i', '<C-s>', '<Cmd>:silent w<CR>', {noremap=true}) -- Save
 
 keymap.set('v', '<BS>', '"_di', { noremap = true }) -- Backspace removes selection
 
