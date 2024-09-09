@@ -106,8 +106,6 @@ end
 vim.api.nvim_create_autocmd({"BufWritePost"}, {
 	pattern = {"*.typ"},
 	callback = function(ev)
-		
-		vim.notify("BufEnter autocmd fired!")
 		local full_path=vim.api.nvim_buf_get_name(ev.buf)
 		--local full_path=ev.file
 
@@ -128,8 +126,8 @@ vim.api.nvim_create_autocmd({"TextChangedI","TextChanged"},{
 	nested = true,
 	callback = function(ev)
 		local buf = ev.buf
-
-		if (vim.fn.empty(vim.api.nvim_buf_get_name(0)) == 0) and (vim.fn.getbufvar(buf, "&modifiable") == 1) then
+		local full_path=vim.api.nvim_buf_get_name(buf)
+		if (vim.fn.empty(full_path) == 0) and (vim.fn.getbufvar(buf, "&modifiable") == 1) and (vim.fn.filereadable(full_path)==1) then
 			vim.cmd(string.format("%i,%ibufdo! :w", buf, buf))
 		end
 	end
