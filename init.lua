@@ -107,16 +107,16 @@ vim.api.nvim_create_autocmd({"BufWritePost"}, {
 	pattern = {"*.typ"},
 	callback = function(ev)
 		local full_path=vim.api.nvim_buf_get_name(ev.buf)
-		--local full_path=ev.file
-
 
 		local write_location=full_path:gsub("%.typ$", ".pdf")
 
 		local directory = getDirectoryFromPath(full_path)
 
 		local file = getFileNameWithoutExtension(full_path)
-		
-		vim.cmd(string.format([[silent exec "!typst compile \"%s\" --root ~ --input FILE_PATH=\"%s\" --input FILE_DIR=\"%s\" \"%s\" &"]], full_path, file, directory, write_location))
+
+		if (file ~= "header") then
+			vim.cmd(string.format([[silent exec "!typst compile \"%s\" --root ~ --input FILE_PATH=\"%s\" --input FILE_DIR=\"%s\" \"%s\" &"]], full_path, file, directory, write_location))
+		end
 
 	end
 })
@@ -128,7 +128,7 @@ vim.api.nvim_create_autocmd({"TextChangedI","TextChanged"},{
 		local buf = ev.buf
 		local full_path=vim.api.nvim_buf_get_name(buf)
 		if (vim.fn.empty(full_path) == 0) and (vim.fn.getbufvar(buf, "&modifiable") == 1) and (vim.fn.filereadable(full_path)==1) then
-			vim.cmd(string.format("%i,%ibufdo! :w", buf, buf))
+			vim.cmd(string.format("%i,%ibufdo! :silent w", buf, buf))
 		end
 	end
 })

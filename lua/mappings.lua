@@ -124,9 +124,23 @@ end, {expr=true, noremap=true}) -- Clear search pattern if there is any
 local hover=require("hover")
 
 keymap.set("i", "<C-i>", function()
-	local highlight_group = vim.api.nvim_command_output([[echo synIDattr(synID(line('.'), col('.'), 1), 'name')]])
+	local is_word = (vim.bo.filetype == "text") or (vim.bo.filetype == "gitcommit")
+	
+	local inspect = vim.inspect_pos()
 
-	local is_word = (string.find(highlight_group, "Comment") or string.find(highlight_group, "String") or (vim.bo.filetype == "text"))
+	for _, token in ipairs(inspect.semantic_tokens) do
+		is_word = is_word or token.opts.hl_group:find("^@lsp%.type%.text%.")
+		if is_word then
+			break
+		end
+	end
+
+	for _, token in ipairs(inspect.treesitter) do
+		is_word = is_word or token.hl_group:find("^@spell%.")
+		if is_word then
+			break
+		end
+	end
 	
 	if is_word and (vim.fn.spellbadword(vim.fn.expand("<cword>"))[1]~="") then
 		--return "<Cmd>call spelunker#correct_from_list()<CR>"
