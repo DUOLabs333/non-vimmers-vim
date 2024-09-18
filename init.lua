@@ -6,7 +6,9 @@ function vimInit()
     vim.cmd("highlight Pmenu ctermbg=black")
     vim.cmd("highlight Pmenu ctermfg=white")
 
-    vim.cmd("set whichwrap+=<,>,[,]")  
+    vim.cmd("set whichwrap+=<,>,[,]")
+
+    vim.cmd("set smoothscroll")
 
 end
 
