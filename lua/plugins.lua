@@ -31,6 +31,7 @@ Plug("neovim/nvim-lspconfig")
 Plug("sontungexpt/better-diagnostic-virtual-text")
 
 Plug('nvim-treesitter/nvim-treesitter')
+
 vim.call('plug#end')
 vim.cmd("filetype indent off")  -- Apparent vim-plug turns it on by default
 
@@ -67,15 +68,22 @@ require("auto-save").setup{
 ]]--
 ----Opening Buffers-----------------------------------
 
-
 require("telescope").setup{
   defaults={
-  path_display={absolute}
+  path_display={absolute},
+  mappings = {
+    i = {
+      ["<esc>"] = function(prompt_bufnr)
+      require('telescope.actions').close(prompt_bufnr)
+      	vim.cmd([[normal! i]])
+	end
+    },
+  }
   },
   pickers = {
     buffers = {
       attach_mappings = function()
-        require("telescope.actions.set").select:enhance({
+        require("telescope.actions.set").select:enhance({ -- So buffers are entered in Insert mode
           post = function()
             vim.schedule(function()
               vim.cmd([[startinsert]])
@@ -84,6 +92,7 @@ require("telescope").setup{
         })
         return true
       end,
+      sort_lastused = true
     },
   },
 }
