@@ -135,6 +135,14 @@ keymap.set("i", "<C-i>", function()
 		end
 	end
 
+	for _, token in ipairs(inspect.syntax) do
+		is_word = is_word or vim.regex([[\(Comment\|pythonString\)$]]):match_str(token.hl_group)
+		if is_word then
+			break
+		end
+	end
+
+
 	for _, token in ipairs(inspect.treesitter) do
 		is_word = is_word or token.hl_group:find("^@spell%.")
 		if is_word then
