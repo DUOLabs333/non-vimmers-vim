@@ -6,8 +6,8 @@ keymap.set("v", "<C-c>", '"+y', { noremap = true }) -- Copy to clipboard
 -- keymap.set("v", "v", '"+p', { noremap = true }) -- Paste from clipboard
 
 
-keymap.set('i', '<C-z>', '<Cmd>u<CR>', { noremap = true }) --Undo
-keymap.set('i', '<C-y>', '<C-o><C-r>', { noremap = true }) -- Redo (Could replace with <C-o><C-r>)
+keymap.set('i', '<C-z>', '<Cmd>u<CR>', { noremap = true }) -- Undo (<Cmd>u<CR>)
+keymap.set('i', '<C-y>', '<C-o>:redo<CR>', { noremap = true }) -- Redo (Could replace with <C-o><C-r>)
 
 keymap.set("i", "<C-.>", "<C-o>", {noremap=true}) -- Since <C-o> is being used already, I can't use it for recursive maps
 
@@ -106,7 +106,6 @@ keymap.set("i","<Esc>", function()
 		return "<Cmd>TroubleClose<CR>"
 	end
 	
-	--vim.api.nvim_echo({{"H"}}, false, {})
 	if cmp.visible() then
 	cmp.abort()
 	return ""

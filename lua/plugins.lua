@@ -103,6 +103,7 @@ vim.cmd("let g:vimtex_view_automatic = 0")
 vim.cmd("let g:vimtex_quickfix_enabled = 0")
 
 --------------LSP------------------------
+
 require("trouble").setup{
     icons = false,
     fold_open = "v", -- icon used for open folds
@@ -121,6 +122,7 @@ use_diagnostic_signs = true -- enabling this will use the signs defined in your 
 require'lspconfig'.jedi_language_server.setup{}
 -- require'lspconfig'.typst_lsp.setup{}
 require'lspconfig'.tinymist.setup{
+	offset_encoding = "utf-8",
 	cmd = {"tinymist-linux-arm64"},
 	root_dir = function(fname) 
 	return vim.env.HOME
@@ -131,6 +133,7 @@ require'lspconfig'.tinymist.setup{
 }
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.rust_analyzer.setup{}
+require'lspconfig'.pylsp.setup{}
 ---------Autocompletion-----------------------
 
 local cmp = require('cmp')

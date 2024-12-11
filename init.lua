@@ -105,6 +105,8 @@ local function getFileNameWithoutExtension(path)
     return nameWithoutExtension or fileName
 end
 
+local buf_to_process = {}
+
 vim.api.nvim_create_autocmd({"BufWritePost"}, {
 	pattern = {"*.typ"},
 	callback = function(ev)
@@ -116,8 +118,8 @@ vim.api.nvim_create_autocmd({"BufWritePost"}, {
 
 		local file = getFileNameWithoutExtension(full_path)
 
-		if (file ~= "header") then
-			vim.cmd(string.format([[silent exec "!typst compile --jobs 1 \"%s\" --root ~ --input FILE_PATH=\"%s\" --input FILE_DIR=\"%s\" \"%s\" &"]], full_path, file, directory, write_location))
+		if (file ~= "header") or (file ~= "slides") then
+			 vim.cmd(string.format([[silent exec "!typst compile --jobs 1 \"%s\" --root ~ --input FILE_PATH=\"%s\" --input FILE_DIR=\"%s\" \"%s\" &"]], full_path, file, directory, write_location)) --Switch to just doing watch commands that activate at bufopen and is killed at bufclose 
 		end
 
 	end
@@ -134,3 +136,33 @@ vim.api.nvim_create_autocmd({"TextChangedI","TextChanged"},{
 		end
 	end
 })
+
+-- Preserves window position when switching between buffers (https://vim.fandom.com/wiki/Avoid_scrolling_when_switch_buffers)
+vim.cmd([[
+function! AutoSaveWinView()
+    if !exists("w:SavedBufView")
+        let w:SavedBufView = {}
+    endif
+    let w:SavedBufView[bufnr("%")] = winsaveview()
+endfunction
+
+" Restore current view settings.
+function! AutoRestoreWinView()
+    let buf = bufnr("%")
+    if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
+        let v = winsaveview()
+        let atStartOfFile = v.lnum == 1 && v.col == 0
+        if atStartOfFile && !&diff
+            call winrestview(w:SavedBufView[buf])
+        endif
+        unlet w:SavedBufView[buf]
+    endif
+endfunction
+
+" When switching buffers, preserve window view.
+if v:version >= 700
+    autocmd BufLeave * call AutoSaveWinView()
+    autocmd BufEnter * call AutoRestoreWinView()
+endif
+]])
+
