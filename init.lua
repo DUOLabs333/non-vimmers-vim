@@ -107,6 +107,39 @@ end
 
 local buf_to_process = {}
 
+vim.api.nvim_create_autocmd({"BufAdd"}, {
+	pattern = {"*.typ"},
+	callback = function(ev)
+		local full_path=vim.api.nvim_buf_get_name(ev.buf)
+
+		local write_location=full_path:gsub("%.typ$", ".pdf")
+
+		local directory = getDirectoryFromPath(full_path)
+
+		local file = getFileNameWithoutExtension(full_path)
+
+		if (file ~= "header") and (file ~= "slides") then
+			buf_to_process[ev.buf] = vim.system({"typst","watch", "--jobs", "1", full_path, "--root", vim.fn.expand('$HOME'), "--input","FILE_PATH="..file, "--input", "FILE_DIR="..directory, write_location}, {detach=false})
+		end
+
+	end
+})
+
+vim.api.nvim_create_autocmd({"BufDelete"}, {
+	pattern = {"*.typ"},
+	callback = function(ev)
+		local proc = buf_to_process[ev.buf]
+
+		if (proc ~= nil) then
+			proc:kill(9)
+		end
+
+		buf_to_process[ev.buf]=nil
+	end
+
+})
+
+if false then
 vim.api.nvim_create_autocmd({"BufWritePost"}, {
 	pattern = {"*.typ"},
 	callback = function(ev)
@@ -124,7 +157,7 @@ vim.api.nvim_create_autocmd({"BufWritePost"}, {
 
 	end
 })
-
+end
 
 vim.api.nvim_create_autocmd({"TextChangedI","TextChanged"},{
 	nested = true,
