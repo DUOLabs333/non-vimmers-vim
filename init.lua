@@ -33,6 +33,8 @@ set linebreak
 set number
 ]])
 
+vim.g.editorconfig = false 
+
 if false then -- Two different implementations of LSP diagnostics
 	vim.o.updatetime = 100
 	vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
@@ -107,7 +109,7 @@ end
 
 local buf_to_process = {}
 
-vim.api.nvim_create_autocmd({"BufAdd"}, {
+vim.api.nvim_create_autocmd({"BufReadPost"}, { -- I can't use BufAdd, as it doesn't fire for buffers that are opened at startup (ie, with `nvim fileA.txt`, BufAdd does not fire for fileA.txt, but will fire after `:edit fileB.txt` for `fileB.txt`)
 	pattern = {"*.typ"},
 	callback = function(ev)
 		local full_path=vim.api.nvim_buf_get_name(ev.buf)
