@@ -32,6 +32,10 @@ Plug("sontungexpt/better-diagnostic-virtual-text")
 
 Plug('nvim-treesitter/nvim-treesitter')
 
+--Plug("zbirenbaum/copilot.lua")
+
+-- Plug("github/copilot.vim")
+
 vim.call('plug#end')
 vim.cmd("filetype indent off")  -- Apparent vim-plug turns it on by default
 
@@ -135,7 +139,6 @@ require'lspconfig'.clangd.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.pylsp.setup{}
 ---------Autocompletion-----------------------
-
 local cmp = require('cmp')
 
   cmp.setup({
@@ -234,3 +237,18 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+-----------------Copilot
+if false then
+require("copilot").setup({
+panel={
+enabled=false
+},
+suggestion={
+enabled=true,
+auto_trigger = true,
+hide_during_completion = false
+},
+})
+end
+

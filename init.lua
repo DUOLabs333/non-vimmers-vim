@@ -18,10 +18,12 @@ vim.cmd([[autocmd CursorHoldI * doautocmd CursorHold]]) -- Since I rarely leave 
 
 vim.cmd([[set updatetime=400]]) -- Decrease the update time, so events are more responsive
 
+vim.cmd([[set backupcopy=yes]]) -- Prevents Neovim from deleting file when saving --- in rare cases, a race condition with the Typst compiler (and presumably other programs that run upon file save) triggers when it tries to compile the file just after Neovim deletes it but before it writes a new one.
+
 --vim.cmd("autocmd BufDelete * if len(filter(range(1, bufnr('$')), '! empty(bufname(v:val)) && buflisted(v:val)')) == 1 | quit | endif") -- Quit if there's no more buffers left
 
 
---vim.cmd("set nohidden") --required to prevent the creation of "[No Name]" buffers
+vim.cmd("set nohidden") --required to prevent the creation of "[No Name]" buffers
 
 vim.diagnostic.config({ signs = true, update_in_insert=true, virtual_text=false}) -- Update on file change in insert mode, show the error/warning icon on the left hand sign, but do not show the error itself in insert mode (it gets distracting)
 
@@ -154,7 +156,7 @@ vim.api.nvim_create_autocmd({"BufWritePost"}, {
 		local file = getFileNameWithoutExtension(full_path)
 
 		if (file ~= "header") or (file ~= "slides") then
-			 vim.cmd(string.format([[silent exec "!typst compile --jobs 1 \"%s\" --root ~ --input FILE_PATH=\"%s\" --input FILE_DIR=\"%s\" \"%s\" &"]], full_path, file, directory, write_location)) --Switch to just doing watch commands that activate at bufopen and is killed at bufclose 
+			 --vim.cmd(string.format([[silent exec "!typst compile --jobs 1 \"%s\" --root ~ --input FILE_PATH=\"%s\" --input FILE_DIR=\"%s\" \"%s\" &"]], full_path, file, directory, write_location)) --Switch to just doing watch commands that activate at bufopen and is killed at bufclose 
 		end
 
 	end
