@@ -39,7 +39,7 @@ keymap.set("i", "<C-g>", "<C-o>:", {noremap=true}) -- Go to line number
 
 keymap.set('i', '<C-q>', '<Cmd>qa!<CR>', {noremap=true}) -- Quit without saving
 
-keymap.set('i', '<C-w>', '<Cmd>:bd<CR>', {noremap=true}) -- Close window
+keymap.set({'i', 't'}, '<C-w>', '<Cmd>:bd<CR>', {noremap=true}) -- Close window
 
 keymap.set('i', '<C-s>', '<Cmd>:silent w<CR>', {noremap=true}) -- Save
 
@@ -227,9 +227,3 @@ keymap.set("i", "<C-r>", function()
 	end
 end, {expr=true, noremap=true})
 -----------------------------------------
-
-keymap.set("t", "<C-n>", [[<Cmd>:term<CR>]], {noremap=true})
-
-keymap.set("t", [[<C-\><C-q>]], [[<Cmd>:bd!<CR>]], {noremap=true})
-
-keymap.set("t", [[<C-\><Esc>]], [[<C-\><C-n>]], {noremap=true})
