@@ -2,9 +2,6 @@ local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
 
--- Plug("kamykn/spelunker.vim")
-
---Plug('pocco81/auto-save.nvim')
 Plug("rmagatti/auto-session")
 
 Plug('nvim-lua/plenary.nvim')
@@ -32,26 +29,8 @@ Plug("sontungexpt/better-diagnostic-virtual-text")
 
 Plug('nvim-treesitter/nvim-treesitter')
 
---Plug("zbirenbaum/copilot.lua")
-
--- Plug("github/copilot.vim")
-
 vim.call('plug#end')
 vim.cmd("filetype indent off")  -- Apparent vim-plug turns it on by default
-
------------Spell Check---------------------
---[=[
-vim.cmd([[let g:spelunker_check_type = 2]])
-vim.cmd([[let g:spelunker_highlight_type = 2]])
-vim.cmd("let g:enable_spelunker_vim = 0")
-vim.cmd([[
-augroup spelunkerFileTypeSwitch
-    autocmd!
-    autocmd BufNewFile,BufRead *.txt,*.md,*.tex,*.typ let b:enable_spelunker_vim = 1
-augroup END
-]])
---]=]
-
 
 ------Auto Save------------------------
 --[[

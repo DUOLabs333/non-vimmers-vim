@@ -10,6 +10,13 @@ function vimInit()
 
     vim.cmd("set smoothscroll")
 
+    vim.api.nvim_create_autocmd("BufEnter", {pattern="*", callback= function()
+    	vim.schedule(function() vim.cmd("startinsert!") end)
+	end
+	}
+    )
+
+
 end
 
 vim.cmd([[autocmd VimEnter * nested lua vimInit() ]]) -- Reload session when starting with no arguments
@@ -23,7 +30,7 @@ vim.cmd([[set backupcopy=yes]]) -- Prevents Neovim from deleting file when savin
 --vim.cmd("autocmd BufDelete * if len(filter(range(1, bufnr('$')), '! empty(bufname(v:val)) && buflisted(v:val)')) == 1 | quit | endif") -- Quit if there's no more buffers left
 
 
-vim.cmd("set nohidden") --required to prevent the creation of "[No Name]" buffers
+-- vim.cmd("set nohidden") --required to prevent the creation of "[No Name]" buffers
 
 vim.diagnostic.config({ signs = true, update_in_insert=true, virtual_text=false}) -- Update on file change in insert mode, show the error/warning icon on the left hand sign, but do not show the error itself in insert mode (it gets distracting)
 
