@@ -10,7 +10,7 @@ function vimInit()
 
     vim.cmd("set smoothscroll")
 
-    vim.api.nvim_create_autocmd("BufEnter", {pattern="*", callback= function()
+    vim.api.nvim_create_autocmd({"BufEnter", "TermOpen"}, {pattern="*", callback= function()
     	vim.schedule(function() vim.cmd("startinsert!") end)
 	end
 	}

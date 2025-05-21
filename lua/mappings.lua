@@ -227,3 +227,9 @@ keymap.set("i", "<C-r>", function()
 	end
 end, {expr=true, noremap=true})
 -----------------------------------------
+
+keymap.set("t", "<C-n>", [[<Cmd>:term<CR>]], {noremap=true})
+
+keymap.set("t", [[<C-\><C-q>]], [[<Cmd>:bd!<CR>]], {noremap=true})
+
+keymap.set("t", [[<C-\><Esc>]], [[<C-\><C-n>]], {noremap=true})
