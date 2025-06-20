@@ -1,6 +1,3 @@
-require("plugins")
-require("mappings")
-
 function vimInit()
     vim.cmd([[let @/ = ""]]) -- Initialize the search register to the empty string
     vim.cmd("highlight Pmenu ctermbg=black")
@@ -16,10 +13,17 @@ function vimInit()
 	}
     )
 
+    vim.cmd("hi BufferInactive guibg=black")
+    vim.cmd("hi BufferCurrent guibg=black gui=bold")
+    vim.cmd("hi BufferTabpagesFill guibg=black")
+    vim.cmd("hi TabLineSel guibg=black")
+    vim.cmd("hi TabLine guibg=black")
 
 end
 
 vim.cmd([[autocmd VimEnter * nested lua vimInit() ]]) -- Reload session when starting with no arguments
+require("plugins")
+require("mappings")
 vim.cmd([[autocmd VimEnter * startinsert!]]) -- Start in insert
 vim.cmd([[autocmd CursorHoldI * doautocmd CursorHold]]) -- Since I rarely leave Insert, manually fire the CursorHold event every once in a while
 

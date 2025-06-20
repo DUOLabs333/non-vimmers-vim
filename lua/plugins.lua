@@ -181,6 +181,16 @@ require('auto-session').setup {
 		function() vim.api.nvim_exec_autocmds('User', {pattern = 'SessionSavePre'}) end -- Important, so barbar can maintain buffer order
 	}
 }
+
+----------BarBar------------
+require("barbar").setup({
+	    icons = {
+	      filetype = {
+	        custom_colors = true,
+	        enabled = true
+	      }
+	    }
+})
 ---------Tree-Sitter-------------
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the listed parsers MUST always be installed)
