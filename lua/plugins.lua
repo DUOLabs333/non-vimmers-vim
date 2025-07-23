@@ -176,11 +176,18 @@ require("hover").setup {
 
 ------- Auto-Session ---------------------
 vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions,globals"
-require('auto-session').setup {
+auto_session=require('auto-session')
+auto_session.setup {
 	pre_save_cmds= {
 		function() vim.api.nvim_exec_autocmds('User', {pattern = 'SessionSavePre'}) end -- Important, so barbar can maintain buffer order
 	}
 }
+vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged' }, {
+  callback = function()
+	auto_session.SaveSession()
+  end,
+})
+
 
 ----------BarBar------------
 require("barbar").setup({
