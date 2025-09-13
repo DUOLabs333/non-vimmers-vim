@@ -117,6 +117,8 @@ require'lspconfig'.tinymist.setup{
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.pylsp.setup{}
+
+vim.lsp.set_log_level("off")
 ---------Autocompletion-----------------------
 local cmp = require('cmp')
 

@@ -140,18 +140,31 @@ vim.api.nvim_create_autocmd({"BufReadPost"}, { -- I can't use BufAdd, as it does
 	end
 })
 
+local function deleteProcess(bufnr)
+	local proc = buf_to_process[bufnr]
+
+	if (proc ~= nil) then
+		proc:kill(9)
+	end
+
+	buf_to_process[bufnr]=nil
+end
 vim.api.nvim_create_autocmd({"BufDelete"}, {
 	pattern = {"*.typ"},
 	callback = function(ev)
-		local proc = buf_to_process[ev.buf]
-
-		if (proc ~= nil) then
-			proc:kill(9)
-		end
-
-		buf_to_process[ev.buf]=nil
+		deleteProcess(ev.buf)
 	end
 
+})
+
+vim.api.nvim_create_autocmd({"VimLeavePre"}, {
+	callback = function()
+		for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+			if vim.api.nvim_buf_is_loaded(bufnr) then
+				deleteProcess(bufnr)
+			end
+		end
+	end
 })
 
 if false then
